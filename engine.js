@@ -8,13 +8,13 @@ let generation = true;
 let activeBuilding = 0;
 let isNewGame;
 
-let backgroundMusic = new Audio("res/music/Shap3S - Swell.mp3"); 
+/*let backgroundMusic = new Audio("res/music/Shap3S - Swell.mp3"); 
 backgroundMusic.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
-}, false);
+}, false);*/
 
-backgroundMusic.volume = 0.1;
+//backgroundMusic.volume = 0.1;
 
 ctx.fillStyle = "skyblue";
 ctx.fillRect(0, 0, gameScreen.width, gameScreen.height);
@@ -120,7 +120,7 @@ function menuStore() {
 function newGame() {
     isNewGame = true;
     scene = "game";
-    backgroundMusic.play();
+    //backgroundMusic.play();
     //let propertiesObj = JSON.parse(fs.readFileSync(path, 'utf8'));  //saving json file to an object
     generateWorld();
     localStorage.setItem("savedGame", gameGrid);
@@ -129,7 +129,7 @@ function newGame() {
 function loadSave() {
     isNewGame = false;
     scene = "game";
-    backgroundMusic.play();
+    //backgroundMusic.play();
     let savedGame = localStorage.getItem("savedGame");
     if(savedGame != null) {
         gameGrid = savedGame.split(",");
