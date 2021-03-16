@@ -1,2 +1,2 @@
 # tinytown
-A tiny game made with Javascript built-in canvas
+Tiny game made with Javascript built-in canvas
