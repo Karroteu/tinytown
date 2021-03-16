@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>TinyTown</title>
+        <link rel="Stylesheet" href="style.css">
+    </head>
+    <body>
+        <noscript>This game requires Javascript in order to work properly</noscript>
+        <div id="container">
+            <canvas id="gameScreen" height="600"></canvas>
+            <div id="instructions">
+                <h3>How to play?</h3>
+                <p>You can move around by pressing WASD keys</p>
+                <p>The town must be built around the Town Hall:</p>
+                <p>The game contains 3 buildable objects:</p>
+                <li>House</li>
+                <li>Shop</li>
+                <li>Road</li>
+                <li>Wind turbine</li>
+                <p>Every building must be build adjacent to the road tile (even roads!), or else it will result in placing a tree. Player is able to destroy every tile, except the water one</p>
+                <p>Every building has set properties:</p>
+                <li>House - can contain up to 4 citizens</li>
+                <li>Shop - allows 9 citizens to work in it</li>
+                <li>Wind turbine - grants 55 citizens to access power</li>
+                <li>Water(generated on start) - grants 2 water (can be made more efficient with up to coming water pumps)</li>
+                <p>There is no goal in the game (excluding building the biggest city possible!)</p>
+                <h3>Step by step: introduction</h3>
+                <p>To begin the game, locate either Town hall, or the road connecting your town with the outer world.</p>
+                <p>Buildings (including roads) are only placable next to roads and Town hall. Place a bunch of them to get some space!</p>
+                <p>I bet you've already tried building a house. It's not possible without building a wind turbine earlier! Wind turbines can be placed wherever you want to, and don't need to be next to the road. If your town is located near swamp, the best you can do is place them on tiny stranded islands.</p>
+                <button onclick="info()">Close</button>
+            </div>
+
+            <div id="mainMenu">
+                <img src="res/2.png"><h1>Tiny Town</h1>
+                <button onclick="newGame()" class="bar" id="storeOffer"><img src="res/2.png"><br>New game</button>
+                <button onclick="loadSave()" class="bar" id="storeOffer"><img src="res/4.png"><br>Load game</button><br>
+                <button class="bar" style="margin-top: 30px; width: 100px;">Credits</button>
+                <button onclick="exit()" class="bar" style="margin-top: 30px; width: 100px;">Close</button>
+            </div>
+
+            <div id="store">
+                <button onclick="selected(2)" class="bar" id="storeOffer"><img src="res/2.png"><br>House - $20</button>
+                <button onclick="selected(4)" class="bar" id="storeOffer"><img src="res/4.png"><br>Shop - $40</button>
+                <button onclick="selected(5)" class="bar" id="storeOffer"><img src="res/5.png"><br>Road - $0</button>
+                <button onclick="selected(7)" class="bar" id="storeOffer"><img src="res/7.png"><br>Wind turbine - $70</button>
+            </div>
+
+            <div id="bar">
+                <div id="left">
+                    <button onclick="menuStore()" class="bar" id="store">Build store</button>
+                    <button onclick="selected(0)" class="bar">Destroy tool</button>
+                    <span id="cash">100$</span>
+                    <span id="population">Population: 0/0</span>
+                    <span id="electricity">Electricity: 0/0</span>
+                    <span id="water">Water: 0/0</span>
+                    <span id="work">Work: 0/0</span>
+                    <span id="happiness">Happiness: 0%</span>
+                </div>
+                <div id="right">
+                    <span id="day">Day 0</span>
+                    <span id="ver">0.1.1</span>
+                    <button onclick="info()" class="bar" id="right">How to play</button>
+                    <button onclick="save()" class="bar" id="right">Save</button>
+                    <button onclick="exit()" class="bar" id="right">Exit</button>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+        <script src="engine.js"></script>
+    </body>
+</html>

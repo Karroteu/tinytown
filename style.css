@@ -1,0 +1,123 @@
+body {
+    margin: 0px;
+    background-color: skyblue;
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;
+}
+
+div[id="container"] {
+    background-color: whitesmoke;
+}
+
+canvas {
+    position: absolute;
+}
+
+div[id="bar"] {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    overflow: auto;
+    width: 100%;
+    height: fit-content;
+    display: none;
+}
+
+button[class="bar"] {
+    padding: 10px;
+    font-size: 18px;
+    border-width: 5px;
+    border-style: solid;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: .1s;
+    cursor: pointer;
+}
+
+button[id="storeOffer"] {
+    width: 180px;
+}
+
+button[class="bar"]:hover {
+    border-color:lime;
+    outline: none;
+    transform: translateY(-3px);
+    transition: .3s;
+}
+
+button[class="bar"]:focus {
+    outline: none;
+}
+
+span {
+    font-weight: 600;
+    background-color: whitesmoke;
+    padding: 5px;
+}
+
+span[id="cash"] {
+    padding: 10px;
+    font-size: 20px;
+}
+
+span[id="ver"] {
+    font-size: 10px;
+}
+
+div[id="instructions"] {
+    z-index: 3;
+    position: absolute;
+    background-color: rgba(255, 255, 255, .8);
+    padding: 15px;
+    margin: 15px;
+    overflow-y: auto;
+    width: 50%;
+    align-self: auto;
+    width: 50%;
+    max-height: 50%;
+    border-radius: 15px;
+    padding: 15px;
+    display: none;
+}
+
+div[id="store"] {
+    z-index: 4;
+    position: absolute;
+    background-color: rgba(255, 255, 255, .8);
+    padding: 15px;
+    margin: 15px;
+    overflow-y: scroll;
+    text-align: center;
+    width: 50%;
+    max-height: 200px;
+    border-radius: 15px;
+    padding: 15px;
+    bottom: 0;
+    margin-bottom: 70px;
+    display: none;
+}
+
+div[id="mainMenu"] {
+    z-index: 5;
+    position: absolute;
+    background-color: rgba(255, 255, 255, .8);
+    padding: 15px;
+    margin: 15px;
+    text-align: center;
+    width: 600px;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    display: none;
+    left: 31%;
+}
+
+div[id="left"] {
+    float: left;
+}
+
+div[id="right"] {
+    float: right;
+}
