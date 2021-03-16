@@ -7,6 +7,7 @@ let canShow = false;
 let generation = true;
 let activeBuilding = 0;
 let isNewGame;
+let ticks = 0;
 
 /*let backgroundMusic = new Audio("res/music/Shap3S - Swell.mp3"); 
 backgroundMusic.addEventListener('ended', function() {
@@ -58,6 +59,7 @@ $("#gameScreen").click(function(event) {
 });
 
 let gameGrid = [];
+let prevDistances = [];
 let distances = [];
 
 let gameBoard = {
@@ -143,22 +145,31 @@ function save() {
 }
 
 let plain = function(x, y, passedData) {
-    if(gameGrid[passedData] === 0) {
-        ctx.drawImage(texture1, x, y);
-    } else if(gameGrid[passedData] === 1) {
-        ctx.drawImage(texture2, x, y);
-    } else if(gameGrid[passedData] === 2) {
-        ctx.drawImage(texture3, x, y);
-    } else if(gameGrid[passedData] === 3) {
-        ctx.drawImage(texture4, x, y);
-    } else if(gameGrid[passedData] === 4) {
-        ctx.drawImage(texture5, x, y);
-    } else if(gameGrid[passedData] === 5) {
-        ctx.drawImage(texture6, x, y);
-    } else if(gameGrid[passedData] === 6) {
-        ctx.drawImage(texture7, x, y);
-    } else if(gameGrid[passedData] === 7) {
-        ctx.drawImage(texture8, x, y);
+    switch(gameGrid[passedData]) {
+        case 0:
+            ctx.drawImage(texture1, x, y);
+            break;
+        case 1:
+            ctx.drawImage(texture2, x, y);
+            break;
+        case 2:
+            ctx.drawImage(texture3, x, y);
+            break;
+        case 3:
+            ctx.drawImage(texture4, x, y);
+            break;
+        case 4:
+            ctx.drawImage(texture5, x, y);
+            break;
+        case 5:
+            ctx.drawImage(texture6, x, y);
+            break;
+        case 6:
+            ctx.drawImage(texture7, x, y);
+            break;
+        case 7:
+            ctx.drawImage(texture8, x, y);
+            break;
     }
 }
 
@@ -206,7 +217,8 @@ let town = {
     minWater: 0,
     work: 0,
     maxWork: 0,
-    happiness: 100
+    happiness: 100,
+    day: 0
 }
 
 let placableBuildings = [2, 4, 5];
@@ -260,11 +272,11 @@ function updateSimulation() {
 
     function simulatePeople() {
         if(town.happiness >= 100 && town.maxPopulation > town.population) {
-            if(Math.random() > .9) {
+            if(ticks % 150 === 0) {
                 town.population++;
             }
         } else if(town.happiness <= 70 && town.population > 0) {
-            if(Math.random() > .9) {
+            if(ticks % 150 === 0) {
                 town.population--;
             }
         }
@@ -284,11 +296,12 @@ function updateSimulation() {
     document.getElementById("water").innerHTML = changeColor("good") + "Water: " + town.water + "/" + town.minWater;
     document.getElementById("work").innerHTML = changeColor("good") + "Work: " + town.work+ "/" + town.maxWork;
     document.getElementById("happiness").innerHTML = changeColor("good") + "Happiness: " + town.happiness + "%";
-
+    document.getElementById("day").innerHTML = changeColor("good") + "Day: " + Math.floor(town.day);
 
     //sprawdz ludzi itd
     simulatePeople();
     simulateElectricity();
+    ticks++;
 }
 
 function resizeCanvas() {
@@ -312,9 +325,10 @@ function resizeCanvas() {
                 moving.y = moving.y / 1.1;
                 canShow = true;
                 generation = false;
+                town.day = Math.floor(ticks / 300);
             } if(scene == "mainMenu") {
                 menuDiv.style.display = "block";
-                barDiv.style.display = "none"; 
+                barDiv.style.display = "none";
             }
         }, 1000 / 45);
     };
@@ -328,6 +342,8 @@ function renderWorld() {
     let z = 0;
     let currentId = 0;
     let swampy = Math.random();
+    prevDistances = distances;
+    distances = [];
     for(i=0; i < gameBoard.width; i++) {
         for(y=0; y < gameBoard.width; y++) {
             const POSX = y*32 - i*32 + gameScreen.width/2 - 32;
@@ -337,20 +353,23 @@ function renderWorld() {
             let differenceX = lastClick.x - (POSX + 32);
             let differenceY = lastClick.y - (POSY + 80);
             distances[currentId] = Math.sqrt((differenceX * differenceX) + (differenceY * differenceY));
-
-            if(distances[currentId] < 32 && Math.min(...distances) === distances[currentId]) { //te 3 kropki to nie wiem nawet co to na stackoverflow znalazlem i dziala
+            if(distances[currentId] < 32 && Math.min(...prevDistances) === prevDistances[currentId]) { //te 3 kropki to nie wiem nawet co to na stackoverflow znalazlem i dziala
                 if(gameGrid[currentId] === 0 || gameGrid[currentId] === 1) {
                     if(activeBuilding === 2 && town.electricity < town.minElectricity) {
                         gameGrid[currentId] = activeBuilding;
                         town.cash -= 20;
+                        distances = [];
                     } else if(activeBuilding === 4 && town.electricity < town.minElectricity) {
                         gameGrid[currentId] = activeBuilding;
                         town.cash -= 40;
+                        distances = [];
                     } else if(activeBuilding === 5) {
                         gameGrid[currentId] = activeBuilding;
+                        distances = [];
                     } else if(activeBuilding === 7) {
                         gameGrid[currentId] = activeBuilding;
                         town.cash -= 70;
+                        distances = [];
                     }
                 } else if(notDestroyable.indexOf(gameGrid[currentId]) === -1 && activeBuilding === 0) { //destroying i guess
                     gameGrid[currentId] = activeBuilding;
@@ -402,6 +421,5 @@ function renderWorld() {
         }
         z = z - gameBoard.width + 1;
     }
-    distances = [];
     generation = false;
 }
