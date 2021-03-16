@@ -14,7 +14,6 @@
     "dependencies": {
         "electron-json-storage": "^4.4.0",
         "fs": "0.0.1-security",
-        "fs-js": "^1.0.6",
         "path": "^0.12.7",
         "perlin-noise": "0.0.1",
         "url": "^0.11.0"
